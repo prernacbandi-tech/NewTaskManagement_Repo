@@ -1,0 +1,10 @@
+
+node_modules/
+playwright/.auth/
+.features-gen/
+playwright-report/
+test-results/
+gmail-profile/
+.env
+.env.*
+!.env.example
