@@ -1,17 +1,34 @@
-import { test as setup, expect } from '@playwright/test';
 
-setup('Login to Gmail and save session', async ({ page }) => {
-    await page.goto('https://mail.google.com/');
+import { chromium, test as setup } from '@playwright/test';
 
-    // Gmail मध्ये login कर
-    // Email आणि password manually enter कर
-    // Google verification मागितल्यास ती पूर्ण कर
+setup.setTimeout(0);
 
-    await expect(page.getByRole('button', {
-        name: /Compose/i
-    })).toBeVisible({ timeout: 120000 });
+setup('Open Gmail and save session', async () => {
+    const context = await chromium.launchPersistentContext(
+        'playwright/.auth/gmail-profile',
+        {
+            headless: false
+        }
+    );
 
-    await page.context().storageState({
+    const page = context.pages()[0] || await context.newPage();
+
+    await page.goto('https://mail.google.com/mail/u/0/#inbox');
+
+    console.log('Gmail browser open aahe.');
+    console.log('Ata manually Gmail login kar ani Inbox open kar.');
+    console.log('Inbox ughadlyavar terminal madhye Enter press kar.');
+
+    // Inbox open zalyavar terminal madhye Enter daba.
+    await new Promise<void>((resolve) => {
+        process.stdin.resume();
+        process.stdin.once('data', () => resolve());
+    });
+
+    await context.storageState({
         path: 'playwright/.auth/gmail.json'
     });
+
+    console.log('Gmail session saved.');
+    await context.close();
 });

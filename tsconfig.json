@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "types": ["node"],
+    "types": ["node", "@playwright/test"],
     "target": "ES2022",
     "module": "ESNext",
     "moduleResolution": "Bundler",

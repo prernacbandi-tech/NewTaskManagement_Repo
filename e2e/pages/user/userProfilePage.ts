@@ -19,7 +19,9 @@ export class userProfilePage {
     private readonly confirmPassword: Locator;
     private readonly sendOtpButton: Locator;
     private readonly otpInput: Locator;
-    private readonly verifyButton: Locator;
+    private readonly verifyChangePasswordButton: Locator;
+    private readonly passwordChangedMessage: Locator;
+
 
 //--------------------------------------------------------------------------------------------------
     constructor(page: Page) {
@@ -43,7 +45,11 @@ export class userProfilePage {
         // OTP input चा locator actual HTML नुसार adjust करावा.
         this.otpInput = this.page.locator('#otpInput');
 
-        this.verifyButton = this.page.locator('#verifyOtpButton');
+        this.verifyChangePasswordButton  = this.page.locator('#verifyOtpButton');
+
+        this.passwordChangedMessage = page.getByText(
+            /password changed successfully/i
+        );
     }
     
 
@@ -61,12 +67,12 @@ export class userProfilePage {
     }
 
     async clickEditButton() {
-    await this.editButton.click();
+        await this.editButton.click();
 
-    await expect(this.fullNameInput).toBeEnabled();
-    await expect(this.emailInput).toBeEnabled();
-    await expect(this.phoneInput).toBeEnabled();
-}
+        await expect(this.fullNameInput).toBeEnabled();
+        await expect(this.emailInput).toBeEnabled();
+        await expect(this.phoneInput).toBeEnabled();
+    }
 
     async editFullName(fullName: string) {
         await this.fullNameInput.fill(fullName);
@@ -140,7 +146,7 @@ export class userProfilePage {
     }
 
     async clickVerifyAndChangePassword() {
-        await this.verifyButton.click();
+        await this.verifyChangePasswordButton.click();
     }
 
     async verifyPasswordChanged() {

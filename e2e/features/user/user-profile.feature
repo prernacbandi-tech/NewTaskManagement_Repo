@@ -22,8 +22,15 @@ Feature: User Profile
     And I confirm the new password
     And I click on Send OTP to Email
     Then I should see the OTP verification section
-    When I open Gmail and get the password change OTP
+    When I switch to Gmail tab
+    And I enter my Gmail email address
+    And I click on Gmail Next button
+    And I enter my Gmail password
+    And I click on Gmail Sign in button
+    Then I should see the Gmail inbox
+    When I search for the password change OTP email
+    And I retrieve the OTP from the email
+    And I switch back to the User Profile tab
     And I enter the received OTP
     And I click on Verify and Change Password
     Then I should see the password changed successfully message
-
